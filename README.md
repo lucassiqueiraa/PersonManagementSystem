@@ -17,11 +17,4 @@ This project is part of my continuous learning process in **ASP.NET MVC, C# and 
 
 ## Purpose
 The main goal of this project is to practice and consolidate concepts of web development with ASP.NET MVC, while building a functional CRUD system for people management.
-
-## Next Steps
-- Add authentication and authorization
-- Implement validation and error handling
-- Enhance UI with responsive design
-- Unit testing
-
 ---
