@@ -1,6 +1,17 @@
 ﻿@model List<Pessoa>
 
-        <h1>Lista de Pessoas<h1>
+<h1>
+    Lista de Pessoas<h1>
+
+@if (TempData["Sucesso"] != null)
+{
+            <div class="alert alert-success" role="alert">
+                @TempData["Sucesso"]
+            </div>
+}
+
+        <a asp-controller="Pessoa" asp-action="Criar" class="btn btn-primary">Criar Usuário</a>
+
         <table class="table">
             <thead>
                 <tr>
@@ -12,9 +23,9 @@
                     <th scope="col">Tipo Sanguíneo</th>
 
                 </tr>
-            </thead>
+            </thead>    
             <tbody>
-                @foreach(var pessoa in Model)
+                @foreach (var pessoa in Model)
                 {
                     <tr>
                         <th scope="row">@pessoa.Id</th>
