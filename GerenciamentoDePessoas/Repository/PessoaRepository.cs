@@ -4,12 +4,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GerenciamentoDePessoas.Repository
 {
-    public class PessoaRepository:IPessoaRepository
+    public class PessoaRepository : IPessoaRepository
     {
         private readonly GerenciamentoDePessoasContext _context;
         public PessoaRepository(GerenciamentoDePessoasContext context)
         {
             _context = context;
+        }
+
+        public async Task<Pessoa> BuscarPorId(int id)
+        {
+            try
+            {
+                var pessoaDb = await _context.Pessoas.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+
+                if (pessoaDb == null)
+                {
+                    throw new Exception("Pessoa não encontrada");
+                }
+
+                return pessoaDb;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<List<Pessoa>> BuscarTodos()
@@ -34,11 +53,25 @@ namespace GerenciamentoDePessoas.Repository
             }
         }
 
+        public async Task<Pessoa> Editar(Pessoa pessoa)
+        {
+            try
+            {
+                _context.Pessoas.Update(pessoa);
+                await _context.SaveChangesAsync();
+                return pessoa;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao editar pessoa: " + ex.Message);
+            }
+        }
+
         public async Task<bool> VerificarSePessoaExiste(string cpf)
         {
-            var usuarioExiste = await _context.Pessoas.AnyAsync(u => u.cpf == cpf);
+            var pessoaExiste = await _context.Pessoas.AnyAsync(u => u.cpf == cpf);
 
-            return usuarioExiste;
+            return pessoaExiste;
         }
     }
 }

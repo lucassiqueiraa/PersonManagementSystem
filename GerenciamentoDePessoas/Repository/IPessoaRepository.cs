@@ -7,5 +7,7 @@ namespace GerenciamentoDePessoas.Repository
         public Task<List<Pessoa>> BuscarTodos();
         public Task<bool> VerificarSePessoaExiste(string cpf);
         public Task<Pessoa> Criar(Pessoa pessoa); 
+        public Task<Pessoa> BuscarPorId(int id);
+        public Task<Pessoa> Editar(Pessoa pessoa);
     }
 }

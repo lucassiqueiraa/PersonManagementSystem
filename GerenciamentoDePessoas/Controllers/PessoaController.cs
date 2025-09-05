@@ -51,5 +51,51 @@ namespace GerenciamentoDePessoas.Controllers
             }
             
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Editar(int id)
+        {
+            try
+            {
+                if(id == 0)
+                {
+                    throw new Exception("Id inválido");
+                }
+
+                var pessoaDb = await _pessoaService.BuscarPorId(id);
+
+                return View(pessoaDb);
+            }
+            catch(Exception ex)
+            {
+                TempData["Erro"] = ex.Message;
+                return RedirectToAction("Index", "Pessoa");
+            }
+            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Editar(Pessoa pessoa)
+        {
+            try
+            {
+                if (pessoa.Id == 0)
+                {
+                    throw new Exception("Id inválido");
+                }
+
+                var pessoaDb = await _pessoaService.Editar(pessoa);
+
+                TempData["Sucesso"] = $"Pessoa {pessoaDb.Nome} editado com sucesso!";
+
+                return RedirectToAction("Index", "Pessoa");
+            }
+            catch (Exception ex)
+            {
+                TempData["Erro"] = ex.Message;
+                return View(pessoa);
+            }
+
+        }
     }
 }

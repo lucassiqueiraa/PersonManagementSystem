@@ -13,10 +13,15 @@ namespace GerenciamentoDePessoas.Services
             _pessoasRepository = pessoaRepository;
         }
 
+        public async Task<Pessoa> BuscarPorId(int id)
+        {
+            return await _pessoasRepository.BuscarPorId(id);    
+        }
+
         public async Task<List<Pessoa>> BuscarTodos()
         {
-            var usuariosBanco = await _pessoasRepository.BuscarTodos();
-            return usuariosBanco;
+            var pessoasBanco = await _pessoasRepository.BuscarTodos();
+            return pessoasBanco;
         }
 
         public async Task<Pessoa> Criar(Pessoa pessoa)
@@ -25,14 +30,20 @@ namespace GerenciamentoDePessoas.Services
 
             if(usuarioExiste)
             {
-                throw new Exception("Usuário já existe");
+                throw new Exception("Pessoa já existe no sistema");
             }
 
-            var usuarioCriado = await _pessoasRepository.Criar(pessoa);
+            var pessoaCriada = await _pessoasRepository.Criar(pessoa);
 
-            return usuarioCriado;
+            return pessoaCriada;
         }
 
-     
+        public async Task<Pessoa> Editar(Pessoa pessoa)
+        {
+            //Não precisa armazenar visto que ja temos a pessoa e o respectivo ID, apenas validação
+            await _pessoasRepository.BuscarPorId(pessoa.Id);
+
+            return await _pessoasRepository.Editar(pessoa);
+        }
     }
 }
