@@ -53,6 +53,12 @@ namespace GerenciamentoDePessoas.Repository
             }
         }
 
+        public async Task Deletar(Pessoa pessoa)
+        {
+            _context.Pessoas.Remove(pessoa);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<Pessoa> Editar(Pessoa pessoa)
         {
             try

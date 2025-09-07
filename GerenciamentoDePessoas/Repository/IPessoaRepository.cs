@@ -9,5 +9,6 @@ namespace GerenciamentoDePessoas.Repository
         public Task<Pessoa> Criar(Pessoa pessoa); 
         public Task<Pessoa> BuscarPorId(int id);
         public Task<Pessoa> Editar(Pessoa pessoa);
+        public Task Deletar(Pessoa pessoa);
     }
 }

@@ -42,14 +42,14 @@ namespace GerenciamentoDePessoas.Controllers
                 }
 
                 return View(pessoa);
-                
+
             }
             catch (Exception ex)
             {
                 TempData["Erro"] = ex.Message;
                 return View(pessoa);
             }
-            
+
         }
 
         [HttpGet]
@@ -57,7 +57,7 @@ namespace GerenciamentoDePessoas.Controllers
         {
             try
             {
-                if(id == 0)
+                if (id == 0)
                 {
                     throw new Exception("Id inválido");
                 }
@@ -66,12 +66,12 @@ namespace GerenciamentoDePessoas.Controllers
 
                 return View(pessoaDb);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 TempData["Erro"] = ex.Message;
                 return RedirectToAction("Index", "Pessoa");
             }
-            
+
         }
 
         [HttpPost]
@@ -96,6 +96,30 @@ namespace GerenciamentoDePessoas.Controllers
                 return View(pessoa);
             }
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Deletar(int id)
+        {
+            try
+            {
+                if (id == 0)
+                {
+                    throw new Exception("Id inválido");
+                }
+
+                await _pessoaService.Deletar(id);
+
+                TempData["Sucesso"] = $"Pessoa deletada com sucesso!";
+
+                return RedirectToAction("Index", "Pessoa");
+
+            }
+            catch (Exception ex)
+            {
+                TempData["Erro"] = ex.Message;
+                return RedirectToAction("Index", "Pessoa");
+            }
         }
     }
 }

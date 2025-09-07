@@ -1,52 +1,106 @@
 ﻿@model List<Pessoa>
 
-<h1>
-    Lista de Pessoas<h1>
+<h1>Lista de Pessoas</h1>
 
 @if (TempData["Sucesso"] != null)
 {
-            <div class="alert alert-success" role="alert">
-                @TempData["Sucesso"]
-            </div>
+    <div class="alert alert-success" role="alert">
+        @TempData["Sucesso"]
+    </div>
 }
 
 @if (TempData["Erro"] != null)
 {
-            <div class="alert alert-danger" role="alert">
-                @TempData["Erro"]
-            </div>
+    <div class="alert alert-danger" role="alert">
+        @TempData["Erro"]
+    </div>
 }
-        <a asp-controller="Pessoa" asp-action="Criar" class="btn btn-primary">Criar Usuário</a>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Sobrenome</th>
-                    <th scope="col">CPF</th>
-                    <th scope="col">Data de Nascimento</th>
-                    <th scope="col">Tipo Sanguíneo</th>
-                    <th scope="col">Ações</th>
+<a asp-controller="Pessoa" asp-action="Criar" class="btn btn-primary">Criar Usuário</a>
 
-                </tr>
-            </thead>    
-            <tbody>
-                @foreach (var pessoa in Model)
-                {
-                    <tr>
-                        <th scope="row">@pessoa.Id</th>
-                        <td>@pessoa.Nome</td>
-                        <td>@pessoa.Sobrenome</td>
-                        <td>@pessoa.cpf</td>
-                        <td>@pessoa.TipoSanguineo.ToString()</td>
-                        <td>@pessoa.DataNascimento.ToShortDateString()</td>
-                        <td>
-                            <a asp-controller="Pessoa"  asp-action="Editar" asp-route-id="@pessoa.Id" title="Editar">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Sobrenome</th>
+            <th scope="col">CPF</th>
+            <th scope="col">Data de Nascimento</th>
+            <th scope="col">Tipo Sanguíneo</th>
+            <th scope="col">Ações</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pessoa in Model)
+        {
+            <tr>
+                <th scope="row">@pessoa.Id</th>
+                <td>@pessoa.Nome</td>
+                <td>@pessoa.Sobrenome</td>
+                <td>@pessoa.cpf</td>
+                <td>@pessoa.TipoSanguineo.ToString()</td>
+                <td>@pessoa.DataNascimento.ToShortDateString()</td>
+                <td>
+                    <a href="" title="Info" class="btn btn-secondary m-2" data-bs-toggle="modal" data-bs-target="#Modal_@pessoa.Id">
+                        <i class="bi bi-info-circle"></i>
+                    </a>
+                    <a asp-controller="Pessoa" asp-action="Editar" asp-route-id="@pessoa.Id" title="Editar" class="btn btn-primary m-2">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a href="" title="Deletar" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#ModalDelecao_@pessoa.Id">
+                        <i class="bi bi-trash-fill"></i>
+                    </a>
+
+                </td>
+            </tr>
+
+            <!-- Modal -->
+            <div class="modal fade" id="Modal_@pessoa.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Detalhes</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-center">Nome: @pessoa.Nome</p>
+                            <p class="text-center">Sobrenome: @pessoa.Sobrenome</p>
+                            <p class="text-center">CPF: @pessoa.cpf</p>
+                            <p class="text-center">Data de nascimento: @pessoa.DataNascimento</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Deletar -->
+            <div class="modal fade" id="ModalDelecao_@pessoa.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar Deleção</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h3>Deseja apagar a pessoa @pessoa.Nome @pessoa.Sobrenome</h3>
+                            <span class="text-danger">A ação não pode ser desfeita após confirmação!</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <form asp-action="Deletar" asp-controller="Pessoa" asp-route-id="@pessoa.Id" method="post">
+                                <button type="submit" class="btn btn-danger">Confirmar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </tbody>
+
+</table>
+
+
+

@@ -38,8 +38,16 @@ namespace GerenciamentoDePessoas.Services
             return pessoaCriada;
         }
 
+        public async Task Deletar(int id)
+        {
+            var pessoaDb = await _pessoasRepository.BuscarPorId(id);
+
+            await _pessoasRepository.Deletar(pessoaDb);
+        }
+
         public async Task<Pessoa> Editar(Pessoa pessoa)
         {
+
             //Não precisa armazenar visto que ja temos a pessoa e o respectivo ID, apenas validação
             await _pessoasRepository.BuscarPorId(pessoa.Id);
 
