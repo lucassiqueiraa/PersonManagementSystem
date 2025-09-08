@@ -1,5 +1,10 @@
 ﻿@model List<Pessoa>
 
+@{
+    ViewData["Title"] = "Pessoas";
+}
+
+
 <h1>Lista de Pessoas</h1>
 
 @if (TempData["Sucesso"] != null)
@@ -18,7 +23,7 @@
 
 <a asp-controller="Pessoa" asp-action="Criar" class="btn btn-primary">Criar Usuário</a>
 
-<table class="table">
+<table class="table table-striped tabela-pessoas">
     <thead>
         <tr>
             <th scope="col">ID</th>

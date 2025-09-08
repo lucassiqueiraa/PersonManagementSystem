@@ -1,6 +1,10 @@
 ﻿@using GerenciamentoDePessoas.Models.Enum
 @model Pessoa
 
+@{
+    ViewData["Title"] = "Editar";
+}
+
 @if (TempData["Erro"] != null)
 {
     <div class="alert alert-danger" role="alert">
