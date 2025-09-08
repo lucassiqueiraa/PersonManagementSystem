@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace GerenciamentoDePessoas.Services
 {
-    public class PessoaService:IPessoaService
+    public class PessoaService : IPessoaService
     {
         private readonly IPessoaRepository _pessoasRepository;
 
@@ -15,7 +15,7 @@ namespace GerenciamentoDePessoas.Services
 
         public async Task<Pessoa> BuscarPorId(int id)
         {
-            return await _pessoasRepository.BuscarPorId(id);    
+            return await _pessoasRepository.BuscarPorId(id);
         }
 
         public async Task<List<Pessoa>> BuscarTodos()
@@ -28,7 +28,7 @@ namespace GerenciamentoDePessoas.Services
         {
             var usuarioExiste = await _pessoasRepository.VerificarSePessoaExiste(pessoa.cpf);
 
-            if(usuarioExiste)
+            if (usuarioExiste)
             {
                 throw new Exception("Pessoa já existe no sistema");
             }
