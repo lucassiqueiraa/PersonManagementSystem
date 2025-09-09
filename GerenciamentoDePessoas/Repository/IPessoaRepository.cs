@@ -5,6 +5,8 @@ namespace GerenciamentoDePessoas.Repository
     public interface IPessoaRepository
     {
         public Task<List<Pessoa>> BuscarTodos();
+        public Task<int> BuscarTotal();
+        public Task<List<Pessoa>> BuscarPessoasNome(string termo);
         public Task<bool> VerificarSePessoaExiste(string cpf);
         public Task<Pessoa> Criar(Pessoa pessoa); 
         public Task<Pessoa> BuscarPorId(int id);

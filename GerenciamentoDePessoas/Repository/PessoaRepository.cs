@@ -12,6 +12,17 @@ namespace GerenciamentoDePessoas.Repository
             _context = context;
         }
 
+        public Task<List<Pessoa>> BuscarPessoasNome(string termo)
+        {
+            var pessoasDb = _context.Pessoas
+                .Where(p => EF.Functions.Like(p.Nome, $"%{termo}%") ||
+                            EF.Functions.Like(p.Sobrenome, $"%{termo}%") ||
+                            EF.Functions.Like(p.cpf, $"%{termo}%"))
+                .ToListAsync();
+
+            return pessoasDb;
+        }
+
         public async Task<Pessoa> BuscarPorId(int id)
         {
             try
@@ -36,6 +47,11 @@ namespace GerenciamentoDePessoas.Repository
             var usuariosBanco = await _context.Pessoas.ToListAsync();
             return usuariosBanco;
 
+        }
+
+        public async Task<int> BuscarTotal()
+        {
+            return await _context.Pessoas.CountAsync();
         }
 
         public async Task<Pessoa> Criar(Pessoa pessoa)

@@ -12,7 +12,7 @@ namespace GerenciamentoDePessoas.Controllers
         public HomeController(ILogger<HomeController> logger, IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
-            _webHostEnvironment = webHostEnvironment;
+            _webHostEnvironment = webHostEnvironment; //Para acessar informações do ambiente de hospedagem
         }
 
         public IActionResult Index()
