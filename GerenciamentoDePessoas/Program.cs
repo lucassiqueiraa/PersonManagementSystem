@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using GerenciamentoDePessoas.Data;
 using GerenciamentoDePessoas.Services;
 using GerenciamentoDePessoas.Repository;
+using Microsoft.AspNetCore.Identity;
+using GerenciamentoDePessoas.Models;
 namespace GerenciamentoDePessoas
 {
     public class Program
@@ -13,6 +15,8 @@ namespace GerenciamentoDePessoas
 
             builder.Services.AddDbContext<GerenciamentoDePessoasContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("GerenciamentoDePessoasContext") ?? throw new InvalidOperationException("Connection string 'GerenciamentoDePessoasContext' not found.")));
+
+            builder.Services.AddDefaultIdentity<Usuario>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<GerenciamentoDePessoasContext>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -42,6 +46,11 @@ namespace GerenciamentoDePessoas
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+            });
 
             app.Run();
         }
