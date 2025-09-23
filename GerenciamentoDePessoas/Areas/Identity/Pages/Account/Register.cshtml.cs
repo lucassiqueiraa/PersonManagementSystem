@@ -22,6 +22,7 @@ using Microsoft.Extensions.Logging;
 
 namespace GerenciamentoDePessoas.Areas.Identity.Pages.Account
 {
+    [Authorize(Roles = "administrador")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<Usuario> _signInManager;
@@ -129,6 +130,9 @@ namespace GerenciamentoDePessoas.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    //Atribuir o papel "operador" ao novo usuário criado pelo Register
+                    await _userManager.AddToRoleAsync(user, "operador");
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

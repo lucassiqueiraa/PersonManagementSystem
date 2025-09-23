@@ -16,7 +16,9 @@ namespace GerenciamentoDePessoas
             builder.Services.AddDbContext<GerenciamentoDePessoasContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("GerenciamentoDePessoasContext") ?? throw new InvalidOperationException("Connection string 'GerenciamentoDePessoasContext' not found.")));
 
-            builder.Services.AddDefaultIdentity<Usuario>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<GerenciamentoDePessoasContext>();
+            builder.Services.AddDefaultIdentity<Usuario>(options => options.SignIn.RequireConfirmedAccount = false)
+                                                        .AddRoles<IdentityRole>()
+                                                        .AddEntityFrameworkStores<GerenciamentoDePessoasContext>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
